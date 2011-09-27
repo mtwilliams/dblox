@@ -25,27 +25,28 @@ namespace Graphics
 	{
 		unsigned int Width;
 		unsigned int Height;
+		unsigned int MSAA;
 		bool Fullscreen;
 	};
 
 	static const VideoMode_t VideoModes[] = {
-		{ 640, 480, false },
-		{ 800, 600, false },
-		{ 1280, 720, false },
-		{ 1280, 800, false },
-		{ 1440, 900, false },
-		{ 1680, 1050, false },
-		{ 1920, 1080, false },
-		{ 1920, 1200, false },
+		{ 640, 480, 4, false },
+		{ 800, 600, 4, false },
+		{ 1280, 720, 4, false },
+		{ 1280, 800, 4, false },
+		{ 1440, 900, 4, false },
+		{ 1680, 1050, 4, false },
+		{ 1920, 1080, 4, false },
+		{ 1920, 1200, 4, false },
 
-		{ 640, 480, true },
-		{ 800, 600, true },
-		{ 1280, 720, true },
-		{ 1280, 800, true },
-		{ 1440, 900, true },
-		{ 1680, 1050, true },
-		{ 1920, 1080, true },
-		{ 1920, 1200, true }
+		{ 640, 480, 4, true },
+		{ 800, 600, 4, true },
+		{ 1280, 720, 4, true },
+		{ 1280, 800, 4, true },
+		{ 1440, 900, 4, true },
+		{ 1680, 1050, 4, true },
+		{ 1920, 1080, 4, true },
+		{ 1920, 1200, 4, true }
 	};
 
 	struct ContextImpl_t;

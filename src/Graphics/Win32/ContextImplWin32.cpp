@@ -6,6 +6,7 @@
 
 #ifdef PLATFORM_WINDOWS
 	#include <windows.h>
+	#include <GL/wglew.h>
 	#include <gl/GL.h>
 #endif
 
@@ -54,6 +55,135 @@ namespace Graphics
 
 #ifdef PLATFORM_WINDOWS
 	LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+	LRESULT CALLBACK DummyWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+	{
+		switch( uMsg )
+		{
+			//case WM_CREATE: return -1; break;
+			case WM_DESTROY: PostQuitMessage(0); return 0; break;
+		}
+
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	}
+
+	typedef struct
+	{
+		HWND hWnd;
+		HDC hDC;
+		HGLRC hRC;
+
+		WNDCLASSEX WndClassEx;
+	} DummyContextInfo_t;
+
+	bool CreateDummyContext( DummyContextInfo_t& DummyContextInfo )
+	{
+		memset((void*)(&DummyContextInfo.WndClassEx), 0, sizeof(WNDCLASSEX));
+		DummyContextInfo.WndClassEx.cbSize = sizeof(WNDCLASSEX);
+		DummyContextInfo.WndClassEx.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+		DummyContextInfo.WndClassEx.lpfnWndProc = DummyWndProc;
+		DummyContextInfo.WndClassEx.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+		DummyContextInfo.WndClassEx.hCursor = LoadCursor(NULL, IDC_ARROW);
+		DummyContextInfo.WndClassEx.hInstance = (HINSTANCE)GetModuleHandle(0);
+		DummyContextInfo.WndClassEx.lpszClassName = "DBLOX_DUMMY";
+
+		if( !RegisterClassEx(&DummyContextInfo.WndClassEx) )
+            return false;
+
+        DummyContextInfo.hWnd = CreateWindowEx(WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, "DBLOX_DUMMY", "",
+											   WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW,
+											   0, 0, 1, 1, NULL, NULL, GetModuleHandle(NULL), NULL);
+
+        if( !DummyContextInfo.hWnd )
+			return false;
+
+		PIXELFORMATDESCRIPTOR PFD = { 0, };
+
+        PFD.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+        PFD.nVersion = 1;
+        PFD.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
+        PFD.iPixelType = PFD_TYPE_RGBA;
+        PFD.cColorBits = 24;
+        PFD.cDepthBits = 24;
+        PFD.iLayerType = PFD_MAIN_PLANE;
+
+		if( !(DummyContextInfo.hDC = GetDC(DummyContextInfo.hWnd)) )
+			return false;
+		
+        int PixelFormat = ChoosePixelFormat(DummyContextInfo.hDC, &PFD);
+        if( !SetPixelFormat(DummyContextInfo.hDC, PixelFormat, &PFD) )
+            return false;
+
+        if( !(DummyContextInfo.hRC = wglCreateContext(DummyContextInfo.hDC)) )
+            return false;
+
+        if( !wglMakeCurrent(DummyContextInfo.hDC, DummyContextInfo.hRC) )
+            return false;
+
+        return true;
+	}
+
+	void DestroyDummyContext( DummyContextInfo_t& DummyContextInfo )
+	{
+        if( DummyContextInfo.hRC )
+        {
+            wglMakeCurrent(NULL, NULL);
+			wglDeleteContext(DummyContextInfo.hRC);
+			ReleaseDC(DummyContextInfo.hWnd, DummyContextInfo.hDC);
+			DestroyWindow(DummyContextInfo.hWnd);
+			UnregisterClass("DBLOX_DUMMY", GetModuleHandle(NULL));
+
+			MSG Msg;
+			while( PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE) )
+			{
+				TranslateMessage(&Msg);
+				DispatchMessage(&Msg);
+			}
+
+			DummyContextInfo.hRC = 0;
+			DummyContextInfo.hDC = 0;
+			DummyContextInfo.hWnd = 0;
+        }
+	}
+
+	int ChoosePixelFormatForVideoMode( DummyContextInfo_t& DummyContextInfo, unsigned int VideoMode )
+    {
+		PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
+
+		if( !wglChoosePixelFormatARB )
+			return 0;
+
+		/*PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
+
+		if( !wglCreateContextAttribsARB )
+			return 0;
+
+		PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+
+		if( !wglSwapIntervalEXT )
+			return 0;*/
+
+        int Attribs [] = {
+            WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+            WGL_ACCELERATION_ARB,   WGL_FULL_ACCELERATION_ARB,
+            WGL_COLOR_BITS_ARB,     24,
+            WGL_ALPHA_BITS_ARB,     8,
+            WGL_DEPTH_BITS_ARB,     24,
+            WGL_STENCIL_BITS_ARB,   8,
+            WGL_DOUBLE_BUFFER_ARB,  GL_TRUE,
+            WGL_SAMPLE_BUFFERS_ARB, GL_TRUE,
+			WGL_SAMPLES_ARB,        Graphics::VideoModes[VideoMode].MSAA,
+            0, 0
+        };
+
+        int PixelFormat = 0;
+        UINT NumFormats = 0;
+        BOOL Status = wglChoosePixelFormatARB(DummyContextInfo.hDC, Attribs, 0, 1, &PixelFormat, &NumFormats);
+
+        if( Status == TRUE && NumFormats )
+			return PixelFormat;
+
+		return 0;
+    }
 
 	bool Context::Create( const std::string& Title, unsigned int VideoMode, Context** Result )
 	{
@@ -77,6 +207,21 @@ namespace Graphics
 
 		ClientArea.right = ClientArea.right - ClientArea.left + 1;
 		ClientArea.bottom = ClientArea.bottom - ClientArea.top + 1;
+
+		// Use a dummy window/context to get a MSAA'd format.
+		DummyContextInfo_t DummyContextInfo;
+		if( !CreateDummyContext(DummyContextInfo) )
+		{
+			DestroyDummyContext(DummyContextInfo);
+			goto __WinFail;
+		}
+
+		GLenum Error = glewInit();
+		if( Error != GLEW_OK )
+			goto __WinFail;
+
+		int PixelFormat = ChoosePixelFormatForVideoMode(DummyContextInfo, VideoMode);
+		DestroyDummyContext(DummyContextInfo);
 
 		static PIXELFORMATDESCRIPTOR PFD =
 		{
@@ -117,9 +262,12 @@ namespace Graphics
 		if( !((*Result)->Impl->hDC = GetDC((*Result)->Impl->hWnd)) )
 			goto __WinFail;
 
-		int PixelFormat = 0;
-		if( !(PixelFormat = ChoosePixelFormat((*Result)->Impl->hDC, &PFD)) )
-			goto __WinFail;
+		// Fallback to non-MSAA'd.
+		if( !PixelFormat )
+		{
+			if( !(PixelFormat = ChoosePixelFormat((*Result)->Impl->hDC, &PFD)) )
+				goto __WinFail;
+		}
 
 		if( !SetPixelFormat((*Result)->Impl->hDC, PixelFormat, &PFD) )
 			goto __WinFail;
@@ -129,14 +277,14 @@ namespace Graphics
 
 		wglMakeCurrent((*Result)->Impl->hDC, (*Result)->Impl->hRC);
 
-		GLenum Error = glewInit();
+		Error = glewInit();
 		if( Error != GLEW_OK )
 			goto __WinFail;
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		//glDisable(GL_CULL_FACE);
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ZERO);
 

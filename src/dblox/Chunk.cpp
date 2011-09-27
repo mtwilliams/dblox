@@ -574,7 +574,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			Vertex.Normal[2] = 0.0f;
 
 			// Top-Left
-			Vertex.Position[0] = x - 0.5f;
+			Vertex.Position[0] = x + 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z - 0.5f;
 
@@ -585,7 +585,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			m_VertexCount++;
 
 			// Bottom-Left
-			Vertex.Position[0] = x - 0.5f;
+			Vertex.Position[0] = x + 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z + 0.5f;
 
@@ -596,7 +596,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			m_VertexCount++;
 
 			// Bottom-Right
-			Vertex.Position[0] = x + 0.5f;
+			Vertex.Position[0] = x - 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z + 0.5f;
 
@@ -607,7 +607,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			m_VertexCount++;
 
 			// Bottom-Right
-			Vertex.Position[0] = x + 0.5f;
+			Vertex.Position[0] = x - 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z + 0.5f;
 
@@ -618,7 +618,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			m_VertexCount++;
 
 			// Top-Right
-			Vertex.Position[0] = x + 0.5f;
+			Vertex.Position[0] = x - 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z - 0.5f;
 
@@ -629,7 +629,7 @@ void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, Ve
 			m_VertexCount++;
 
 			// Top-Left
-			Vertex.Position[0] = x - 0.5f;
+			Vertex.Position[0] = x + 0.5f;
 			Vertex.Position[1] = y - 0.5f;
 			Vertex.Position[2] = z - 0.5f;
 
