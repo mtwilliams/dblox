@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B073A824-BBA6-4EF7-A3AB-706144204362}</ProjectGuid>
+    <RootNamespace>graphics</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>../../../../include;../../../../libs/glew/include;../../../../libs/FreeImage/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../libs/glew/lib;../../../../bin;../../../../libs/FreeImage/lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\..\..\bin\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>../../../../include;../../../../libs/glew/include;../../../../libs/FreeImage/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../libs/glew/lib;../../../../bin;../../../../libs/FreeImage/lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\..\..\bin\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DBLOX_GRAPHICS_COMPILE;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;FreeImage.lib;math.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DBLOX_GRAPHICS_COMPILE;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;FreeImage.lib;math.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\Graphics\2D\SpriteBatch.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Color.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Context.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Exports.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Format.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\IndexBuffer.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Primitive.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\RenderTarget.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Shader.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Texture.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\Texture3D.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\VertexBuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\Graphics\2D\SpriteBatch.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Color.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\IndexBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\RenderTarget.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Texture3D.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Win32\ContextImplWin32.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\Win32\DllMain.cpp" />
+    <ClCompile Include="..\..\..\..\src\Shared\JSON.cpp" />
+    <ClCompile Include="..\..\..\..\src\Shared\JSONValue.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
