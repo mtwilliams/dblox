@@ -88,6 +88,7 @@
     <ClInclude Include="..\..\..\..\include\Graphics\Shader.h" />
     <ClInclude Include="..\..\..\..\include\Graphics\Texture.h" />
     <ClInclude Include="..\..\..\..\include\Graphics\Texture3D.h" />
+    <ClInclude Include="..\..\..\..\include\Graphics\TextureArray.h" />
     <ClInclude Include="..\..\..\..\include\Graphics\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +99,7 @@
     <ClCompile Include="..\..\..\..\src\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\..\..\src\Graphics\Texture.cpp" />
     <ClCompile Include="..\..\..\..\src\Graphics\Texture3D.cpp" />
+    <ClCompile Include="..\..\..\..\src\Graphics\TextureArray.cpp" />
     <ClCompile Include="..\..\..\..\src\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\..\..\..\src\Graphics\Win32\ContextImplWin32.cpp" />
     <ClCompile Include="..\..\..\..\src\Graphics\Win32\DllMain.cpp" />

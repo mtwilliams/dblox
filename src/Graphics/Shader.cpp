@@ -135,7 +135,7 @@ __Failed:
 			glGetProgramInfoLog(Obj, 1024, &Length, InfoLog);
 
 		if(Length > 0)
-			printf("OpenGL/GLSL Error: %s\n", &InfoLog);
+			printf("Error (Shader): %s\n", &InfoLog);
 
 		return !(Length > 0);
 	}
@@ -148,7 +148,7 @@ __Failed:
 		char* Buffer = 0;
 		unsigned int Size = 0;
 
-		printf("Shader::CreateFromSource(&s, %s)\n", Vertex.c_str(), Fragment.c_str());
+		printf("Shader::CreateFromSource('%s', '%s')\n", Vertex.c_str(), Fragment.c_str());
 
 		std::stringstream Stream = std::stringstream(std::stringstream::in | std::stringstream::out);
 		Stream << "#version 120\n";
@@ -160,7 +160,7 @@ __Failed:
 
 		Stream << "\n\n";
 
-		printf("Prefix:\n%s", Stream.str().c_str());
+		//printf("Prefix:\n%s", Stream.str().c_str());
 
 		std::string Source = Stream.str();
 		const char* CSource = Source.c_str();

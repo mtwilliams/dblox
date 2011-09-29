@@ -13,18 +13,18 @@ class Chunk
 		static const unsigned int Height = 32;
 
 	public:
-		Chunk( int X, int Y, unsigned int Seed );
+		Chunk( int X, int Z, unsigned int Seed );
 		Chunk( const std::string& Filename );
 
 		~Chunk();
 
+        void Update( float DeltaTime );
 		void Draw( void );
-		void Update( float DeltaTime );
 
 		void Rebuild( void );
 
 	protected:
-		unsigned int X, Y;
+		unsigned int X, Z;
 		unsigned char m_Blocks[Chunk::Width][Chunk::Width][Chunk::Height];
 
 		Graphics::VertexBuffer* m_pVBO;
@@ -32,7 +32,7 @@ class Chunk
 
 	protected:
 		unsigned int CalcNumVisibleFaces( void );
-		void GenerateFaceForBlock( unsigned int x, unsigned z,  unsigned int y, Graphics::VertexFormats::VertexXYZNUV* Vertices, unsigned int Face );
+		void GenerateFaceForBlock( unsigned int x, unsigned z,  unsigned int y, Graphics::VertexFormats::VertexXYZNUVW* Vertices, unsigned int Face );
 };
 
 #endif

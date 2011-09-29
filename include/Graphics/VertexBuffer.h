@@ -15,7 +15,8 @@ namespace Graphics
 			XYZ = 0,
 			XYZUV,
 			XYZCUV,
-			XYZNUV
+			XYZNUV,
+            XYZNUVW,
 		};
 
 		typedef struct
@@ -42,6 +43,13 @@ namespace Graphics
 			float Normal[3];
 			float UV[2];
 		} VertexXYZNUV;
+
+        typedef struct
+        {
+            float Position[3];
+            float Normal[3];
+            float UVW[3];
+        } VertexXYZNUVW;
 	}
 
 	struct VertexBufferImpl_t;

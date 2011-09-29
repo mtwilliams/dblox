@@ -63,6 +63,9 @@
     <ClInclude Include="..\..\..\..\include\Graphics\Texture3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\Graphics\TextureArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\Graphics\Color.cpp">
@@ -100,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\Graphics\Win32\ContextImplWin32.cpp">
       <Filter>Source Files\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\Graphics\TextureArray.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

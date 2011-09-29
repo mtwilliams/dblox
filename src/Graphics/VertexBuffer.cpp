@@ -139,6 +139,18 @@ namespace Graphics
 				glEnableClientState(GL_NORMAL_ARRAY);
 				glNormalPointer(GL_FLOAT, sizeof(VertexFormats::VertexXYZNUV), (void*)offsetof(VertexFormats::VertexXYZNUV, Normal));
 			} break;
+
+            case VertexFormats::XYZNUVW:
+            {
+                glVertexPointer(3, GL_FLOAT, sizeof(VertexFormats::VertexXYZNUVW), (void*)offsetof(VertexFormats::VertexXYZNUVW, Position));
+				
+				glClientActiveTexture(GL_TEXTURE0);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glTexCoordPointer(3, GL_FLOAT, sizeof(VertexFormats::VertexXYZNUVW), (void*)offsetof(VertexFormats::VertexXYZNUVW, UVW));
+
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glNormalPointer(GL_FLOAT, sizeof(VertexFormats::VertexXYZNUVW), (void*)offsetof(VertexFormats::VertexXYZNUVW, Normal));
+            } break;
 		}
 	}
 

@@ -86,13 +86,17 @@
     <ClCompile Include="..\..\..\src\dblox\Camera.cpp" />
     <ClCompile Include="..\..\..\src\dblox\Chunk.cpp" />
     <ClCompile Include="..\..\..\src\dblox\Main.cpp" />
-    <ClCompile Include="..\..\..\src\dblox\Textures.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\ResourceManager.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\Resources.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\WorldRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\dblox\Blocks.h" />
     <ClInclude Include="..\..\..\include\dblox\Camera.h" />
     <ClInclude Include="..\..\..\include\dblox\Chunk.h" />
-    <ClInclude Include="..\..\..\include\dblox\Textures.h" />
+    <ClInclude Include="..\..\..\include\dblox\ResourceManager.h" />
+    <ClInclude Include="..\..\..\include\dblox\Resources.h" />
+    <ClInclude Include="..\..\..\include\dblox\WorldRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
