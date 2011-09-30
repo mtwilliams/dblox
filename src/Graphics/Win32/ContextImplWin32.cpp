@@ -21,10 +21,10 @@ namespace Graphics
         HGLRC hRC;
 
         // Timing
-        LARGE_INTEGER HighPreformanceFreq;
-        LARGE_INTEGER HighPreformanceStart;
-        DWORD LowPreformanceStart;
-        BOOL UseHighPreformance;
+        LARGE_INTEGER HighPerformanceFreq;
+        LARGE_INTEGER HighPerformanceStart;
+        DWORD LowPerformanceStart;
+        BOOL UseHighPerformance;
 #endif
 
         // Agnostic
@@ -297,9 +297,9 @@ namespace Graphics
 
         (*Result)->Impl->IsOpen = true;
 
-        (*Result)->Impl->LowPreformanceStart = ::GetTickCount();
-        (*Result)->Impl->UseHighPreformance = QueryPerformanceFrequency(&(*Result)->Impl->HighPreformanceFreq);
-        QueryPerformanceCounter(&(*Result)->Impl->HighPreformanceStart);
+        (*Result)->Impl->LowPerformanceStart = ::GetTickCount();
+        (*Result)->Impl->UseHighPerformance = QueryPerformanceFrequency(&(*Result)->Impl->HighPerformanceFreq);
+        QueryPerformanceCounter(&(*Result)->Impl->HighPerformanceStart);
 
         freopen("stdout.txt", "w", stdout);
 
@@ -629,15 +629,15 @@ __WinFail:
 #ifdef PLATFORM_WINDOWS
     float Context::GetTickCount( void )
     {
-        if( Impl->UseHighPreformance )
+        if( Impl->UseHighPerformance )
         {
             LARGE_INTEGER Current;
             QueryPerformanceCounter(&Current);
-            return ((double)(Current.QuadPart - Impl->HighPreformanceStart.QuadPart) / (double)(Impl->HighPreformanceFreq.QuadPart * 0.001)) * 0.001;
+            return ((double)(Current.QuadPart - Impl->HighPerformanceStart.QuadPart) / (double)(Impl->HighPerformanceFreq.QuadPart * 0.001)) * 0.001;
         }
         else
         {
-            return (float)((double)Impl->LowPreformanceStart - (double)GetTickCount()) / 1000.0f;
+            return (float)((double)Impl->LowPerformanceStart - (double)GetTickCount()) / 1000.0f;
         }
     }
 #endif

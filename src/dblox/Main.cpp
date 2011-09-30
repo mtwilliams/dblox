@@ -1,7 +1,6 @@
 #include "Graphics/Context.h"
 
 #include "dblox/Resources.h"
-#include "dblox/Blocks.h"
 
 #include "dblox/Chunk.h"
 #include "dblox/Camera.h"
@@ -16,9 +15,6 @@ int main( int argc, char** argv)
         return -1;
 
     if( !Resources::Precache() )
-        return -1;
-
-    if( !Blocks::Initialize() )
         return -1;
 
     WorldRenderer* TestWorldRenderer = new WorldRenderer();

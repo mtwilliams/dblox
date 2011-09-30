@@ -4,6 +4,8 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/IndexBuffer.h"
 
+#include "dblox/Blocks/Block.h"
+
 #include <string>
 
 class Chunk

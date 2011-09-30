@@ -3,7 +3,7 @@
 #include "Math/Vector3.h"
 #include "Utils/Random.h"
 
-#include "dblox/Blocks.h"
+#include "dblox/Blocks/Blocks.h"
 
 #include "dblox/Chunk.h"
 
@@ -11,12 +11,7 @@
 
 using namespace Graphics::VertexFormats;
 
-#define BLOCK_FACE_LEFT   1
-#define BLOCK_FACE_RIGHT  2
-#define BLOCK_FACE_FRONT  3
-#define BLOCK_FACE_BACK   4
-#define BLOCK_FACE_TOP    5
-#define BLOCK_FACE_BOTTOM 6
+#define BLOCK_TEXTURES 32
 
 #define BLOCK_AT( x, z, y ) \
     (m_Blocks[x][z][y])
@@ -33,29 +28,29 @@ Chunk::Chunk( int X, int Z, unsigned int Seed )
         {
             if( x == 0 )
             {
-                BLOCK_AT(x, z, y) = 2;
+                BLOCK_AT(x, z, y) = Blocks::Dirt;
             }
             else if( x == Chunk::Width - 1 )
             {
-                BLOCK_AT(x, z, y) = 2;
+                BLOCK_AT(x, z, y) = Blocks::Dirt;
             }
             else
             {
-                BLOCK_AT(x, z, y) = (Utils::Random::Integer() % 8) > 0 ? 0 : 6;
+                BLOCK_AT(x, z, y) = (Utils::Random::Integer() % 8) > 0 ? Blocks::Air : Blocks::Dirt;
             }
         }
         else if( y == Chunk::Height / 2 - 1 )
         {
-            BLOCK_AT(x, z, y) = 2;
+            BLOCK_AT(x, z, y) = Blocks::Dirt;
         }
         else
         {
-            BLOCK_AT(x, z, y) = 0;
+            BLOCK_AT(x, z, y) = Blocks::Air;
         }
 
         if( y == 0 )
         {
-            BLOCK_AT(x, z, y) = 2;
+            BLOCK_AT(x, z, y) = Blocks::Dirt;
         }
     }}}
 
@@ -91,7 +86,7 @@ void Chunk::Rebuild( void )
     for( unsigned int z = 0; z < Chunk::Width; ++z ) {
     for( unsigned int y = 0; y < Chunk::Height; ++y ) {
 
-        if( !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y)) )
+        if( !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             if( x == 0 )
             {
@@ -125,32 +120,32 @@ void Chunk::Rebuild( void )
             continue;
         }
 
-        if( x > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x - 1, z, y)) )
+        if( x > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x - 1, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x - 1, z, y, Vertices, BLOCK_FACE_RIGHT);
         }
 
-        if( x < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x + 1, z, y)) )
+        if( x < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x + 1, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x + 1, z, y, Vertices, BLOCK_FACE_LEFT);
         }
 
-        if( z > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z - 1, y)) )
+        if( z > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z - 1, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x, z - 1, y, Vertices, BLOCK_FACE_FRONT);
         }
 
-        if( z < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z + 1, y)) )
+        if( z < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z + 1, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x, z + 1, y, Vertices, BLOCK_FACE_BACK);
         }
 
-        if( y > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y - 1)) )
+        if( y > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y - 1))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x, z, y - 1, Vertices, BLOCK_FACE_TOP);
         }
 
-        if( y < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y + 1)) )
+        if( y < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y + 1))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             GenerateFaceForBlock(x, z, y + 1, Vertices, BLOCK_FACE_BOTTOM);
         }
@@ -172,7 +167,7 @@ unsigned int Chunk::CalcNumVisibleFaces( void )
     for( unsigned int z = 0; z < Chunk::Width; ++z ) {
     for( unsigned int y = 0; y < Chunk::Height; ++y ) {
 
-        if( !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y)) )
+        if( !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             if( x == 0 )
             {
@@ -204,36 +199,35 @@ unsigned int Chunk::CalcNumVisibleFaces( void )
             continue;
         }
 
-        if( x > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x - 1, z, y)) )
+        if( x > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x - 1, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
 
-        if( x < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x + 1, z, y)) )
+        if( x < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x + 1, z, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
 
-        if( z > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z - 1, y)) )
+        if( z > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z - 1, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
 
-        if( z < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z + 1, y)) )
+        if( z < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z + 1, y))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
 
-        if( y > 0 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y - 1)) )
+        if( y > 0 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y - 1))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
 
-        if( y < Chunk::Width - 1 && !Blocks::IsBlockTranslucent(BLOCK_AT(x, z, y + 1)) )
+        if( y < Chunk::Width - 1 && !(BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y + 1))->GetFlags() & BLOCK_FLAG_TRANSLUCENT) )
         {
             Visible++;
         }
-
     }}}
 
     return Visible;
@@ -241,27 +235,11 @@ unsigned int Chunk::CalcNumVisibleFaces( void )
 
 void Chunk::GenerateFaceForBlock( unsigned int x, unsigned int z, unsigned y, VertexXYZNUVW* Vertices, unsigned int Face )
 {
-    /*Graphics::Texture* Terrain = Textures::GetTexture("Terrain");
-
-    unsigned int Block = BLOCK_AT(x, z, y);
-    float U1 = (Block % 16) * 16 + 0.05f;
-    float V1 = (Block / 16) * 16 + 0.05f;
-    float U2 = (Block % 16) * 16 + 16 - 0.05f;
-    float V2 = (Block / 16) * 16 + 16 - 0.05f;
-
-    U1 /= Terrain->GetWidth();
-    U2 /= Terrain->GetWidth();
-    V1 /= Terrain->GetHeight();
-    V2 /= Terrain->GetHeight();
-
-    V1 = 1.0f - V1;
-    V2 = 1.0f - V2;*/
-
     float U1 = 0.0f;
-    float V1 = 1.0f;
+    float V1 = 0.0f;
     float U2 = 1.0f;
-    float V2 = 0.0f;
-    float W = 32 - BLOCK_AT(x, z, y);
+    float V2 = 1.0f;
+    float W = BLOCK_TEXTURES - BlockManager::GetBlock((Blocks::Block)BLOCK_AT(x, z, y))->GetTextureOnFace(Face);
 
     // The Y axis is flipped in OpenGL vs. Chunks
     y = Chunk::Height - y;

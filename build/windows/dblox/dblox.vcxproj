@@ -82,7 +82,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\dblox\Blocks.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\Blocks\AirBlock.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\Blocks\Blocks.cpp" />
+    <ClCompile Include="..\..\..\src\dblox\Blocks\DirtBlock.cpp" />
     <ClCompile Include="..\..\..\src\dblox\Camera.cpp" />
     <ClCompile Include="..\..\..\src\dblox\Chunk.cpp" />
     <ClCompile Include="..\..\..\src\dblox\Main.cpp" />
@@ -91,7 +93,11 @@
     <ClCompile Include="..\..\..\src\dblox\WorldRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\dblox\Blocks.h" />
+    <ClInclude Include="..\..\..\include\dblox\Blocks\AirBlock.h" />
+    <ClInclude Include="..\..\..\include\dblox\Blocks\Block.h" />
+    <ClInclude Include="..\..\..\include\dblox\Blocks\Blocks.h" />
+    <ClInclude Include="..\..\..\include\dblox\Blocks\DirtBlock.h" />
+    <ClInclude Include="..\..\..\include\dblox\Blocks\Event.h" />
     <ClInclude Include="..\..\..\include\dblox\Camera.h" />
     <ClInclude Include="..\..\..\include\dblox\Chunk.h" />
     <ClInclude Include="..\..\..\include\dblox\ResourceManager.h" />

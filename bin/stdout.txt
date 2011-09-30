@@ -1,2 +1,0 @@
-Info: Precaching 'Textures/Logo.png'
-Shader::CreateFromSource('Shaders/GLSL/Chunk.vert', 'Shaders/GLSL/Chunk.frag')
