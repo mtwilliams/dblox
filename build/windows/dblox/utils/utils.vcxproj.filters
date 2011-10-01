@@ -24,6 +24,9 @@
     <ClInclude Include="..\..\..\..\include\Utils\Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\Utils\Coordinates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\Utils\MersenneTwister.cpp">

@@ -3,9 +3,7 @@
 WorldRenderer::WorldRenderer( void )
     : m_pTerrainTexture(0)
     , m_pChunkShader(0)
-    , m_pTestChunk(0)
 {
-    m_pTestChunk = new Chunk(0, 0, 0);
 }
 
 WorldRenderer::~WorldRenderer()
@@ -34,12 +32,22 @@ void WorldRenderer::Update( float DeltaTime )
 void WorldRenderer::Render( void )
 {
     // Draw chunks.
-    // TODO: Handle order / transparency
     m_pTerrainTexture->Bind(Graphics::TextureTargets::Texture0);
     m_pChunkShader->Bind();
 
-    m_pTestChunk->Draw();
+    // TODO: Order chunks for translucent blocks (like water)
+    for( std::list<Chunk*>::iterator Iter = m_ChunkRenderQueue.begin(); Iter != m_ChunkRenderQueue.end(); ++Iter )
+    {
+        (*Iter)->Draw();
+    }
+
+    m_ChunkRenderQueue.clear();
 
     m_pChunkShader->Unbind();
     m_pTerrainTexture->Unbind();
+}
+
+void WorldRenderer::AddChunkToRenderQueue( Chunk* Chunk )
+{
+    m_ChunkRenderQueue.push_back(Chunk);
 }

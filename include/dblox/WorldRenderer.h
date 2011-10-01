@@ -3,7 +3,10 @@
 
 #include "Graphics/Shader.h"
 #include "Graphics/TextureArray.h"
+
 #include "dblox/Chunk.h"
+
+#include <list>
 
 class WorldRenderer
 {
@@ -16,11 +19,13 @@ class WorldRenderer
         void Update( float DeltaTime );
         void Render( void );
 
+        void AddChunkToRenderQueue( Chunk* Chunk );
+
     protected:
         Graphics::TextureArray* m_pTerrainTexture;
         Graphics::Shader* m_pChunkShader;
 
-        Chunk* m_pTestChunk;
+        std::list<Chunk*> m_ChunkRenderQueue;
 };
 
 #endif

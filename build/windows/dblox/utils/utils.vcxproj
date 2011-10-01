@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\Utils\Coordinates.h" />
     <ClInclude Include="..\..\..\..\include\Utils\Exports.h" />
     <ClInclude Include="..\..\..\..\include\Utils\MersenneTwister.h" />
     <ClInclude Include="..\..\..\..\include\Utils\Random.h" />

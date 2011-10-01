@@ -562,6 +562,7 @@ __WinFail:
     void Context::Display( void )
     {
 #ifdef PLATFORM_WINDOWS
+        glFlush();
         SwapBuffers(Impl->hDC);
 #endif
     }

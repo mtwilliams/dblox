@@ -57,6 +57,12 @@
     <ClCompile Include="..\..\..\src\dblox\PerlinNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\dblox\World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\dblox\ChunkCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\dblox\Chunk.h">
@@ -96,6 +102,12 @@
       <Filter>Header Files\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\dblox\PerlinNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\dblox\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\dblox\ChunkCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
