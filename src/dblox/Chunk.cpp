@@ -3,6 +3,8 @@
 #include "Math/Vector3.h"
 #include "Utils/Random.h"
 
+#include "dblox/PerlinNoise.h"
+
 #include "dblox/Blocks/Blocks.h"
 
 #include "dblox/Chunk.h"
@@ -21,36 +23,31 @@ Chunk::Chunk( int X, int Z, unsigned int Seed )
     , Z(Z)
     , m_pVBO(0)
 {
+    PerlinNoise Noise = PerlinNoise(Utils::Random::Integer());
+
     for( unsigned int x = 0; x < Chunk::Width; ++x ) {
     for( unsigned int z = 0; z < Chunk::Width; ++z ) {
+
+        double N = Noise.SmoothNoise2D(x / 8.0, z / 8.0, 1.0 / 2.0, 2);
+        unsigned int Ground = (Chunk::Height / 2 - 1) + ((Chunk::Height / 8) * N);
+        unsigned int Stone = (Chunk::Height / 2 - 1) - (6 - (N * 2 + 2));
+        Stone = (Stone + Ground) / 2;
+
     for( unsigned int y = 0; y < Chunk::Height; ++y ) {
-        if( y < Chunk::Height / 2 - 1 )
+        if( y < Ground )
         {
-            if( x == 0 )
-            {
-                BLOCK_AT(x, z, y) = Blocks::Dirt;
-            }
-            else if( x == Chunk::Width - 1 )
-            {
-                BLOCK_AT(x, z, y) = Blocks::Dirt;
-            }
+            if( y < Stone )
+                BLOCK_AT(x, z, y) = Blocks::Stone;
             else
-            {
-                BLOCK_AT(x, z, y) = (Utils::Random::Integer() % 8) > 0 ? Blocks::Air : Blocks::Dirt;
-            }
+                BLOCK_AT(x, z, y) = Blocks::Dirt;
         }
-        else if( y == Chunk::Height / 2 - 1 )
+        else if( y == Ground )
         {
-            BLOCK_AT(x, z, y) = Blocks::Dirt;
+            BLOCK_AT(x, z, y) = Blocks::Grass;
         }
         else
         {
             BLOCK_AT(x, z, y) = Blocks::Air;
-        }
-
-        if( y == 0 )
-        {
-            BLOCK_AT(x, z, y) = Blocks::Dirt;
         }
     }}}
 

@@ -4,7 +4,7 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/IndexBuffer.h"
 
-#include "dblox/Blocks/Block.h"
+#include "dblox/Blocks/Blocks.h"
 
 #include <string>
 
@@ -27,7 +27,7 @@ class Chunk
 
 	protected:
 		unsigned int X, Z;
-		unsigned char m_Blocks[Chunk::Width][Chunk::Width][Chunk::Height];
+        Blocks::Block m_Blocks[Chunk::Width][Chunk::Width][Chunk::Height];
 
 		Graphics::VertexBuffer* m_pVBO;
 		unsigned int m_VertexCount;

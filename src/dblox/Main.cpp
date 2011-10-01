@@ -22,7 +22,7 @@ int main( int argc, char** argv)
     if( !TestWorldRenderer->Initialize() )
         return -1;
 
-    Camera Cam = Camera(Math::Vector3(0.0f, 0.0f, -1.0f), Math::Vector3(0.0f, -180.0f, 0.0f), 1.0f, 101.0f, 80.0f, 4.0f/3.0f);
+    Camera Cam = Camera(Math::Vector3(0.0f, -15.0f, -1.0f), Math::Vector3(0.0f, -180.0f, 0.0f), 1.0f, 101.0f, 80.0f, 4.0f/3.0f);
 
     float LastTime = Context->GetTickCount();
     float CurrentTime = Context->GetTickCount();

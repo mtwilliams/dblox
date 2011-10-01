@@ -7,9 +7,6 @@ int DirtBlock::OnEvent( const BlockEvent_t& Event )
 
 int DirtBlock::GetTextureOnFace( unsigned int Face )
 {
-    if( Face == BLOCK_FACE_TOP )
-        return 1;
-
     return 2;
 }
 

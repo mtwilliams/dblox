@@ -4,6 +4,8 @@
 #include "dblox/Blocks/Block.h"
 #include "dblox/Blocks/AirBlock.h"
 #include "dblox/Blocks/DirtBlock.h"
+#include "dblox/Blocks/GrassBlock.h"
+#include "dblox/Blocks/StoneBlock.h"
 
 namespace Blocks
 {
@@ -11,6 +13,8 @@ namespace Blocks
     {
         Air = 0,
         Dirt,
+        Grass,
+        Stone,
         Count
     };
 }

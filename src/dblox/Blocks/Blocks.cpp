@@ -15,6 +15,8 @@ BlockManager::BlockManager( void )
 {
     m_Blocks[Blocks::Air] = new AirBlock();
     m_Blocks[Blocks::Dirt] = new DirtBlock();
+    m_Blocks[Blocks::Stone] = new StoneBlock();
+    m_Blocks[Blocks::Grass] = new GrassBlock();
 }
 
 BlockManager::~BlockManager()
